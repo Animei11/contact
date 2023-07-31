@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 520c49c (Updates)
 <?php
 $servername = "localhost";
 $username = "root";
@@ -15,12 +19,20 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 
 // Adds a row
+<<<<<<< HEAD
 // $sql = "INSERT INTO `queue_list` (`User`, `EmployeeID`, `Problem`) VALUES ('Person', 0, 'I am dumb')";
 // mysqli_query($conn, $sql);
 
 // Selescts all data in a table 
 $sql = "SELECT * FROM `queue_list`
         WHERE User = 'Person'";
+=======
+// $sql = "INSERT INTO `queue_list` (`User`, `EmployeeID`, `Problem`) VALUES ('Lance', 2, 'I am dumb')";
+// mysqli_query($conn, $sql);
+
+// Selescts all data in a table 
+$sql = "SELECT * FROM `queue_list`";
+>>>>>>> 520c49c (Updates)
 
 
 $result = ($conn->query($sql));
@@ -39,6 +51,7 @@ $result = ($conn->query($sql));
 <html>
 <style>
     td,th {
+<<<<<<< HEAD
         border: 1px solid black;
         padding: 10px;
         margin: 5px;
@@ -48,6 +61,21 @@ $result = ($conn->query($sql));
   
 <body>
     <h1 align = "center">Queue List</h1>
+=======
+        border: 2px solid black;
+        padding: 50px;
+        margin: 5px;
+        text-align: center;
+        font-size: 35px;
+    }
+    h1 {
+        text-align: center;
+        font-size: 50px;
+    }
+</style>
+<body>
+    <h1>Check-In List</h1>
+>>>>>>> 520c49c (Updates)
     <table align = "center">
         <thead>
             <tr>
@@ -63,7 +91,10 @@ $result = ($conn->query($sql));
               { 
             ?>
             <tr>
+<<<<<<< HEAD
   
+=======
+>>>>>>> 520c49c (Updates)
                 <td><?php echo $rows['User']; ?></td>
                 <td><?php echo $rows['EmployeeID']; ?></td>
                 <td><?php echo $rows['Problem']; ?></td>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -41,3 +42,48 @@
     </form>
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Service Desk Waiting List</title>
+    <style>
+      .center {
+        max-width: 500px;
+        margin: auto;
+        font-size: large;
+      }
+      #problem {
+        height: 100px;
+        width: 500px;
+
+      }
+    </style>
+  </head>
+  <body class="center">
+    <h1>Service Desk Check-In List</h1>
+    <!-- Goes to php file to save form to database -->
+    <form action="http://localhost/contact/test.php" method="post">
+      <!-- Input for First Name -->
+      <label for="fname">First name:</label><br>
+      <input type="text" id="fname" name="fname"><br><br>
+      <!-- Input for Last Name -->
+      <label for="lname">Last name:</label><br>
+      <input type="text" id="lname" name="lname">
+      <!-- Input for Computer Type -->
+      <p>Computer Type:</p>
+        <input type="radio" name="comp_type" value="Dell">
+        <label for="Dell">Dell</label>
+      <br>
+        <input type="radio" name="comp_type" value="Mac">
+        <label for="Mac">Mac</label><br><br>
+      <!-- Input for Problem User is Having -->
+      <label for="problem">Describe the issue with your computer:</label><br>
+      <textarea type="text" id="problem" name="problem"></textarea>
+      <br><br>
+      <!-- Submit Form -->
+      <input type="submit">
+    </form>
+  </body>
+</html>
+>>>>>>> 520c49c (Updates)

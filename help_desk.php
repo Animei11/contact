@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 520c49c (Updates)
+<!-- Service Desk Check-In Form-->
 <?php
 $servername = "localhost";
 $username = "root";
@@ -10,77 +7,48 @@ $dbname = "help_desk";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-
-// // Check connection
-// if ($conn->connect_error) {
-//   die("Connection failed: " . $conn->connect_error);
-// }
-// echo "Connected successfully\n";
-
-
-// Adds a row
-<<<<<<< HEAD
-// $sql = "INSERT INTO `queue_list` (`User`, `EmployeeID`, `Problem`) VALUES ('Person', 0, 'I am dumb')";
-// mysqli_query($conn, $sql);
-
-// Selescts all data in a table 
-$sql = "SELECT * FROM `queue_list`
-        WHERE User = 'Person'";
-=======
-// $sql = "INSERT INTO `queue_list` (`User`, `EmployeeID`, `Problem`) VALUES ('Lance', 2, 'I am dumb')";
-// mysqli_query($conn, $sql);
-
-// Selescts all data in a table 
-$sql = "SELECT * FROM `queue_list`";
->>>>>>> 520c49c (Updates)
-
-
+$sql = "SELECT * FROM `queue_list` ORDER BY `Time_submitted`";
 $result = ($conn->query($sql));
-    //declare array to store the data of database
-    $row = []; 
-  
-    if ($result->num_rows > 0) 
-    {
-        // fetch all data from db into array 
-        $row = $result->fetch_all(MYSQLI_ASSOC);  
-    }   
+$row = []; 
+
+if ($result->num_rows > 0) {
+    // fetch all data from db into array 
+     $row = $result->fetch_all(MYSQLI_ASSOC);  
+}
 ?>
 
 
 <!DOCTYPE html>
-<html>
-<style>
-    td,th {
-<<<<<<< HEAD
-        border: 1px solid black;
-        padding: 10px;
-        margin: 5px;
-        text-align: center;
-    }
-</style>
-  
-<body>
-    <h1 align = "center">Queue List</h1>
-=======
+<html lang="en">
+  <head>
+    <title>Service Desk Waiting List</title>
+    <style>
+      .center {
+        max-width: 500px;
+        margin: auto;
+        font-size: large;
+      }
+      td,th {
         border: 2px solid black;
-        padding: 50px;
+        padding: 40px;
         margin: 5px;
         text-align: center;
-        font-size: 35px;
-    }
-    h1 {
-        text-align: center;
-        font-size: 50px;
-    }
-</style>
-<body>
-    <h1>Check-In List</h1>
->>>>>>> 520c49c (Updates)
+        font-size: 25px;
+      }
+      h1 {
+          text-align: center;
+          font-size: 45px;
+      }
+    </style>
+  </head>
+  <!-- Displays waiting list -->
+  <body action="http://localhost/contact/edit_user.php" class="center">
+    <h1 align = "center">Service Desk Waiting List</h1>
     <table align = "center">
         <thead>
             <tr>
+                <th>Number</th>
                 <th>User</th>
-                <th>EmployeeID</th>
                 <th>Problem</th>
             </tr>
         </thead>
@@ -91,22 +59,29 @@ $result = ($conn->query($sql));
               { 
             ?>
             <tr>
-<<<<<<< HEAD
-  
-=======
->>>>>>> 520c49c (Updates)
+                <td><?php echo $rows['Number']; ?></td>
                 <td><?php echo $rows['User']; ?></td>
-                <td><?php echo $rows['EmployeeID']; ?></td>
                 <td><?php echo $rows['Problem']; ?></td>
             </tr>
             <?php } ?>
         </tbody>
     </table>
-</body>
+    <!-- Deletes user when next button hit and sends email?-->
+    <form method="post" >
+      <?php
+        if(array_key_exists('next', $_POST)) {
+          require __DIR__ . '/edit_user.php';
+          edit_user("delete");
+        }
+      ?>
+      <!-- Next button to delete user at the top of the list -->
+      <input type="submit" name="next" class="button" value="Next">
+    </form>
+  </body>
 </html>
 
 
 <?php   
-    // Closes connection 
-    mysqli_close($conn);
+  // Closes connection 
+  mysqli_close($conn);
 ?>

@@ -1,12 +1,8 @@
-<?php 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "help_desk";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-$sql = "INSERT INTO `queue_list` (`User`, `EmployeeID`, `Problem`) VALUES ('$dbname', 2, 'I am dumb')";
-mysqli_query($conn, $sql);
+<?php
+$myfile = fopen("edit_user.php", "r") or die("Unable to open file!");
+// Output one line until end-of-file
+while(!feof($myfile)) {
+  echo fgets($myfile) . "<br>";
+}
+fclose($myfile);
 ?>

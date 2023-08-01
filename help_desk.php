@@ -40,6 +40,11 @@ if ($result->num_rows > 0) {
           font-size: 45px;
       }
     </style>
+    <script>
+      function again() {
+        location.reload();
+      }
+    </script>
   </head>
   <!-- Displays waiting list -->
   <body action="http://localhost/contact/edit_user.php" class="center">
@@ -75,7 +80,7 @@ if ($result->num_rows > 0) {
         }
       ?>
       <!-- Next button to delete user at the top of the list -->
-      <input type="submit" name="next" class="button" value="Next">
+      <input type="submit" name="next" class="button" value="Next" onclick="again()">
     </form>
   </body>
 </html>

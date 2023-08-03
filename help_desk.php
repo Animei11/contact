@@ -1,5 +1,6 @@
 <!-- Service Desk Check-In Form-->
 <?php
+header("Refresh:80");
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -75,32 +76,48 @@ if ($result->num_rows > 0) {
     <!-- Deletes user when next button hit and sends email?-->
     <form method="post" >
       <?php
-      // If Next button is clicked
+      // If Next button is clicked (Sends email, deletes user 1, moves the rest up teh list)
         if(array_key_exists('next', $_POST)) {
+          // Refreshes page
           header("Refresh:0");
-          echo "Reloaded page...";
+          // Email headings 
+          $subject = "Help Desk Check-In Status";
+          $headers = "From: HelpDesk";
+          // Sets up email for person next in line 
           $sql = "SELECT `Email` FROM `queue_list` WHERE `Number` = 2";
           $result = ($conn->query($sql));
           $row = []; 
-
           if($result->num_rows > 0) {
             // Gets email from database 
             $row = $result->fetch_all(MYSQLI_ASSOC);  
           }  
           if(!empty($row))
             foreach($row as $rows) {
-              $to_email = $rows['Email'];
-            } 
-          $subject = "Help Desk Check-In Status";
-          $body = "Hello," ."\n" ."This email is to notify you that your computer is currently being looked at. We will notify you when the issue is resolved." 
+              $body = "Hello," ."\n\n" ."This email is to notify you that your computer is currently being looked at. We will notify you when the issue is resolved." 
                   ."\n\n" ."Thanks," ."\n" ."Help Desk";
-          $headers = "From: HelpDesk";
-          // Sends email
-          if (mail($to_email, $subject, $body, $headers)) {
-            echo "Email successfully sent to $to_email...";
-          } else {
-            echo "Email sending failed...";
-          }
+              $to_email = $rows['Email'];
+              // Sends email
+              mail($to_email, $subject, $body, $headers);
+            } 
+
+          
+          // Sets up email for person to collect their laptop when finished 
+          $sql = "SELECT `Email` FROM `queue_list` WHERE `Number` = 1";
+          $result = ($conn->query($sql));
+          $row = []; 
+          if($result->num_rows > 0) {
+            // Gets email from database 
+            $row = $result->fetch_all(MYSQLI_ASSOC);  
+          }  
+          if(!empty($row))
+            foreach($row as $rows) {
+              $body = "Hello," ."\n\n" ."This email is to notify you that your issue has been resolved. Please collect your computer." 
+                  ."\n\n" ."Thanks," ."\n" ."Help Desk";
+              $to_email = $rows['Email'];
+              // Sends email
+              mail($to_email, $subject, $body, $headers);
+            } 
+          
           // Deletes user from database 
           require __DIR__ . '/edit_user.php';
           edit_user("delete");

@@ -24,7 +24,15 @@
       <input type="text" id="fname" name="fname" required><br><br>
       <!-- Input for Last Name -->
       <label for="lname">Last name:</label><br>
-      <input type="text" id="lname" name="lname" required>
+      <input type="text" id="lname" name="lname" required><br><br>
+      <!-- Input for Email -->
+      <label for="username">Email:</label><br>
+      <input type="text" id="username" name="username" required>
+      <!-- Input for Email Extension -->
+      <select name="email_extension">
+        <option value="@genesco.com">@genesco.com</option>
+        <option value="@journeys.com">@journeys.com</option>
+      </select>
       <!-- Input for Computer Type -->
       <p>Computer Type:</p>
         <input type="radio" name="comp_type" value="Dell" required>

@@ -43,6 +43,7 @@ if ($result->num_rows > 0) {
     <script>
       function again() {
         location.reload();
+        document.write("Reloaded page...");
       }
     </script>
   </head>
@@ -74,13 +75,39 @@ if ($result->num_rows > 0) {
     <!-- Deletes user when next button hit and sends email?-->
     <form method="post" >
       <?php
+      // If Next button is clicked
         if(array_key_exists('next', $_POST)) {
+          header("Refresh:0");
+          echo "Reloaded page...";
+          $sql = "SELECT `Email` FROM `queue_list` WHERE `Number` = 2";
+          $result = ($conn->query($sql));
+          $row = []; 
+
+          if($result->num_rows > 0) {
+            // Gets email from database 
+            $row = $result->fetch_all(MYSQLI_ASSOC);  
+          }  
+          if(!empty($row))
+            foreach($row as $rows) {
+              $to_email = $rows['Email'];
+            } 
+          $subject = "Help Desk Check-In Status";
+          $body = "Hello," ."\n" ."This email is to notify you that your computer is currently being looked at. We will notify you when the issue is resolved." 
+                  ."\n\n" ."Thanks," ."\n" ."Help Desk";
+          $headers = "From: HelpDesk";
+          // Sends email
+          if (mail($to_email, $subject, $body, $headers)) {
+            echo "Email successfully sent to $to_email...";
+          } else {
+            echo "Email sending failed...";
+          }
+          // Deletes user from database 
           require __DIR__ . '/edit_user.php';
           edit_user("delete");
         }
       ?>
       <!-- Next button to delete user at the top of the list -->
-      <input type="submit" name="next" class="button" value="Next" onclick="again()">
+      <input type="submit" name="next" class="button" value="Next">
     </form>
   </body>
 </html>

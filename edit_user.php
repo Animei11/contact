@@ -7,6 +7,8 @@ function edit_user($edit) {
     $dbname = "help_desk";
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    
     // Adds or deletes users
     if($edit == "add") {
         // Uploads data from html file and saves into database
@@ -16,7 +18,10 @@ function edit_user($edit) {
         $comp_type = $_POST["comp_type"];
         $problem = $_POST["problem"];
         $user = $lname. $comma. $fname;
-        $sql = "INSERT INTO `queue_list` (`Number`, `User`, `EmployeeID`, `Problem`, `Computer`, `Time_submitted`) VALUES (0, '$user', 2, '$problem', '$comp_type', CURRENT_TIME);";
+        $username = $_POST["username"];
+        $email_extension = $_POST["email_extension"];
+        $email = $username. $email_extension;
+        $sql = "INSERT INTO `queue_list` (`Number`, `User`, `EmployeeID`, `Problem`, `Computer`, `Time_submitted`, `Email`) VALUES (0, '$user', 2, '$problem', '$comp_type', CURRENT_TIME, '$email');";
     }
     elseif($edit == "delete") {
         $sql = "DELETE FROM `queue_list` WHERE `Number` = 1";
@@ -26,12 +31,11 @@ function edit_user($edit) {
     $sql = "SELECT * FROM `queue_list` ORDER BY `Time_submitted`";
     $result = ($conn->query($sql));
     $row = []; 
-
+    $counter = 1;
     if ($result->num_rows > 0) {
         // fetch all data from db into array 
         $row = $result->fetch_all(MYSQLI_ASSOC);  
-    }  
-    $counter = 1;
+    } 
     if(!empty($row))
         foreach($row as $rows) {
             $user = $rows['User'];
